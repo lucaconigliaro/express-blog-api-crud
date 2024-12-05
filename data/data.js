@@ -36,4 +36,11 @@ const posts = [
     }
 ];
 
+// {
+//     "titolo": "Cannoli Siciliani",
+//     "contenuto": "Un dolce tradizionale siciliano con una crosta croccante e un ripieno cremoso di ricotta, arricchito con gocce di cioccolato e scorza d'arancia candita.",
+//     "immagine": "/images/cannoli_siciliani.jpeg",
+//     "tags": ["dolce", "siciliano", "ricotta", "tradizionale"]
+// }
+
 module.exports = posts;

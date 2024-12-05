@@ -33,9 +33,11 @@ const show = (req, res) => {
 };
 
 const store = (req, res) => {
-    newPost = req.body;
-    res.json("Aggiungo un nuovo post");
-    console.log(req.body)
+    const newPost = req.body;  // Recupera i dati del nuovo post dal corpo della richiesta
+    console.log(req.body);
+    newPost.id = posts[posts.length - 1].id + 1; // Assegno al nuovo post un nuovo ID prendendo l'ID dell'ultimo elemento nell'array incrementandolo di 1
+    posts.push(newPost); // Pusho il nuovo post con l'ID nell'array
+    res.json(newPost);
 };
 
 const update = (req, res) => {
