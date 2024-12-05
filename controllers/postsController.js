@@ -32,8 +32,10 @@ const show = (req, res) => {
     }
 };
 
-const create = (req, res) => {
+const store = (req, res) => {
+    newPost = req.body;
     res.json("Aggiungo un nuovo post");
+    console.log(req.body)
 };
 
 const update = (req, res) => {
@@ -63,7 +65,7 @@ const destroy = (req, res) => {
 module.exports = {
     index,
     show,
-    create,
+    store,
     update,
     destroy
 };

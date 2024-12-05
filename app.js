@@ -4,6 +4,9 @@ const postsRouters = require("./routers/posts"); // Importiamo il router che con
 const app = express();
 const port = 3001; 
 
+// Aggiungo il body parser in formato JSON per poter leggere il body della richiesta quando arriva alle rotte post/put/patch
+app.use(express.json());
+
 //Configuriamo gli asset statici sull’applicazione in modo che si possano visualizzare le immagini associate ad ogni post.
 app.use(express.static(`public`));
 
