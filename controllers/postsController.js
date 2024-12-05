@@ -33,7 +33,7 @@ const show = (req, res) => {
 };
 
 const store = (req, res) => {
-    const newPost = req.body;  // Recupera i dati del nuovo post dal corpo della richiesta
+    const newPost = req.body;  // Recupero i dati del nuovo post dal corpo della richiesta
     console.log(req.body);
     newPost.id = posts[posts.length - 1].id + 1; // Assegno al nuovo post un nuovo ID prendendo l'ID dell'ultimo elemento nell'array incrementandolo di 1
     posts.push(newPost); // Pusho il nuovo post con l'ID nell'array
@@ -41,8 +41,11 @@ const store = (req, res) => {
 };
 
 const update = (req, res) => {
-    const postsId = req.params.id;
-    res.json("Aggiorno tutti i dati del post " + postsId);
+    const postsId = parseInt(req.params.id); // Estrae l'ID del post dai parametri della richiesta
+    const updatedPost = req.body; // Recupero i dati aggiornati del post dal corpo della richiesta
+    updatedPost.id = postsId; // Associo l'ID estratto al post aggiornato, garantendo che l'ID rimanga invariato
+    res.json(updatedPost);
+    console.log(updatedPost)
 };
 
 const destroy = (req, res) => {
