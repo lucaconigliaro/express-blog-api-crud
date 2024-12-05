@@ -7,7 +7,7 @@ const index = (req, res) => {
     if (queryString.tags !== undefined) {
         postDaInviare = posts.filter((curPost) => curPost.tags.includes(queryString.tags));
     };
-     // Risponde con un oggetto contenente i post filtrati e il numero totale
+    // Risponde con un oggetto contenente i post filtrati e il numero totale
     res.json({
         data: postDaInviare,
         count: postDaInviare.length
@@ -26,14 +26,14 @@ const show = (req, res) => {
     // Se il post non è stato trovato, restituisce un errore 404
     if (post === null) {
         res.sendStatus(404);
-         // Altrimenti restituisce il post come risposta JSON
+        // Altrimenti restituisce il post come risposta JSON
     } else {
         res.json(post);
     }
 };
 
 const store = (req, res) => {
-    const newPost = req.body;  // Recupero i dati del nuovo post dal corpo della richiesta
+    const newPost = req.body; // Recupero i dati del nuovo post dal corpo della richiesta
     console.log(req.body);
     newPost.id = posts[posts.length - 1].id + 1; // Assegno al nuovo post un nuovo ID prendendo l'ID dell'ultimo elemento nell'array incrementandolo di 1
     posts.push(newPost); // Pusho il nuovo post con l'ID nell'array
@@ -44,15 +44,25 @@ const update = (req, res) => {
     const postsId = parseInt(req.params.id); // Estrae l'ID del post dai parametri della richiesta
     const updatedPost = req.body; // Recupero i dati aggiornati del post dal corpo della richiesta
     updatedPost.id = postsId; // Associo l'ID estratto al post aggiornato, garantendo che l'ID rimanga invariato
-    res.json(updatedPost);
-    console.log(updatedPost)
+    const indexToFind = posts.findIndex(curPost => curPost.id === postsId); // Trovo l'indice del post nell'array che ha lo stesso ID
+    if (indexToFind === - 1) { // Se il post non viene trovato:
+        res.statusCode = 404;
+        res.json({
+            error: true,
+            message: "Post non trovato"
+        })
+    } else { // Se il post viene trovato:
+        posts[indexToFind] = updatedPost; // Aggiorno l'elemento nell'array  con i nuovi dati
+        res.json(updatedPost);
+        console.log(updatedPost);
+    }
 };
 
 const destroy = (req, res) => {
     const postsId = parseInt(req.params.id);
-     // Trovo l'indice del post nell'array
+    // Trovo l'indice del post nell'array
     const postIndex = posts.findIndex((curPost) => curPost.id === postsId);
-     // Se il post non è trovato, restituisce un errore 404
+    // Se il post non è trovato, restituisce un errore 404
     if (postIndex === -1) {
         res.statusCode = 404;
         res.json({
@@ -60,7 +70,7 @@ const destroy = (req, res) => {
             message: "Post non trovato"
         })
     } else {
-         // Rimuove il post dall'array usando splice
+        // Rimuove il post dall'array usando splice
         posts.splice(postIndex, 1);
         res.sendStatus(204); // Restituisce uno stato 204 per indicare che l'eliminazione è avvenuta con successo
         console.log(posts); // stampa i post aggiornati nella console 
