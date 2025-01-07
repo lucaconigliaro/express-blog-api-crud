@@ -7,11 +7,11 @@ const cors = require("cors");
 const app = express();
 const port = 3001; 
 
+
 // CORS
 app.use(cors({
-        origin: "http://http://localhost:5173/"
-    }));
-
+    origin: ['http://localhost:5173', 'http://localhost:5175'],  // Aggiungi entrambe le origini
+}));
 
 // Aggiungo il body parser in formato JSON per poter leggere il body della richiesta quando arriva alle rotte post/put/patch
 app.use(express.json());
@@ -24,7 +24,7 @@ app.use(`/posts`, postsRouters);
 
 // Creiamo una rotta per la homepage (`/`) che risponde con un messaggio JSON.
 app.get(`/`, (req, res) => {
-    ops(); //funzione che non esiste e da l'errore
+    // ops(); //funzione che non esiste e da l'errore
     console.log("La rotta è stata chiamata");
     res.json({
         message: "Server del mio blog"
@@ -32,9 +32,10 @@ app.get(`/`, (req, res) => {
 });
 
 app.use(notFoundRoute);
-
-// Dopo tutte le rotte inseriamo il middleware che gestisce l'errore
 app.use(handleError);
+
+// // Dopo tutte le rotte inseriamo il middleware che gestisce l'errore
+// app.use(handleError);
 
 // Avviamo il server sull'indirizzo localhost alla porta specificata (3001).
 app.listen(port, () => {
