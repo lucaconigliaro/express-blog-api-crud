@@ -1,9 +1,17 @@
 const express = require(`express`); 
 const postsRouters = require("./routers/posts");
 const handleError = require(`./middlewares/handleError`);
+const notFoundRoute = require(`./middlewares/notFoundRoute`);
+const cors = require("cors");
 
 const app = express();
 const port = 3001; 
+
+// CORS
+app.use(cors({
+        origin: "http://http://localhost:5173/"
+    }));
+
 
 // Aggiungo il body parser in formato JSON per poter leggere il body della richiesta quando arriva alle rotte post/put/patch
 app.use(express.json());
@@ -22,6 +30,8 @@ app.get(`/`, (req, res) => {
         message: "Server del mio blog"
     })
 });
+
+app.use(notFoundRoute);
 
 // Dopo tutte le rotte inseriamo il middleware che gestisce l'errore
 app.use(handleError);
